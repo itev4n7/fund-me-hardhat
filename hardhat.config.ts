@@ -1,7 +1,6 @@
 import { HardhatUserConfig } from "hardhat/config";
 import "@nomicfoundation/hardhat-toolbox";
 import "dotenv/config";
-import { hardhatArguments } from "hardhat";
 
 const config: HardhatUserConfig = {
   defaultNetwork: "hardhat",
