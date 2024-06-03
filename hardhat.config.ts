@@ -9,7 +9,7 @@ const config: HardhatUserConfig = {
     blockPollingInterval: 1_000,
     timeBeforeBumpingFees: 3 * 60 * 1_000,
     maxFeeBumps: 4,
-    //requiredConfirmations: 5
+    //requiredConfirmations: 5 //uncomment if deploying on testnet, for localhost keep commented or use 1
   },
   networks: {
     sepolia: {
