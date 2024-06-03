@@ -1,0 +1,43 @@
+{
+  "name": "fund-me-hardhat",
+  "version": "1.0.0",
+  "author": "Oleksii Kvasov",
+  "license": "MIT",
+  "description": "",
+  "scripts": {
+    "lint": "yarn solhint 'contracts/*.sol'",
+    "lint-fix": "yarn solhint 'contracts/*.sol' --fix",
+    "coverage": "yarn hardhat coverage --testfiles test/unit",
+    "test": "yarn hardhat test --grep @unit",
+    "test-staging": "yarn hardhat test --grep @staging --network sepolia",
+    "run-fund-local": "yarn hardhat run scripts/fund.ts --network localhost",
+    "run-withdraw-local": "yarn hardhat run scripts/withdraw.ts --network localhost"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "hardhat": "^2.22.4"
+  },
+  "devDependencies": {
+    "@chainlink/contracts": "^1.1.1",
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.0",
+    "@nomicfoundation/hardhat-ethers": "^3.0.0",
+    "@nomicfoundation/hardhat-ignition": "^0.15.0",
+    "@nomicfoundation/hardhat-ignition-ethers": "^0.15.0",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.0",
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.0",
+    "@typechain/ethers-v6": "^0.5.0",
+    "@typechain/hardhat": "^9.0.0",
+    "@types/chai": "^4.2.0",
+    "@types/mocha": ">=9.1.0",
+    "@types/node": ">=18.0.0",
+    "chai": "^4.2.0",
+    "ethers": "^6.4.0",
+    "hardhat-gas-reporter": "^1.0.8",
+    "solhint": "^5.0.1",
+    "solidity-coverage": "^0.8.0",
+    "ts-node": ">=8.0.0",
+    "typechain": "^8.3.0",
+    "typescript": ">=4.5.0"
+  }
+}
