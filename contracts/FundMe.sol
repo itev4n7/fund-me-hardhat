@@ -4,6 +4,7 @@ pragma solidity 0.8.24;
 // 2. Imports
 import "@chainlink/contracts/src/v0.8/shared/interfaces/AggregatorV3Interface.sol";
 import "./PriceConverter.sol";
+import "@openzeppelin/contracts/utils/introspection/ERC165.sol";
 
 // 3. Interfaces, Libraries, Contracts
 error FundMe__NotOwner();
@@ -14,7 +15,7 @@ error FundMe__NotOwner();
  * @notice This contract is to demo sample funding contract
  * @dev It's implements price feeds as our library
  */
-contract FundMe {
+contract FundMe is ERC165 {
   // 1. Type Declarations
   using PriceConverter for uint256;
 
@@ -24,6 +25,16 @@ contract FundMe {
   address[] private s_funders;
   mapping(address => uint256) private s_addressToAmountFunded;
   AggregatorV3Interface private s_priceFeed;
+  // Interface ID for FundMe (calculated manually)
+  bytes4 private constant _INTERFACE_ID_FUNDME =
+    bytes4(keccak256("fund()")) ^
+      bytes4(keccak256("withdraw()")) ^
+      bytes4(keccak256("cheapWithdraw()")) ^
+      bytes4(keccak256("getAddressToAmountFunded(address)")) ^
+      bytes4(keccak256("getVersion()")) ^
+      bytes4(keccak256("getFunder(uint256)")) ^
+      bytes4(keccak256("getOwner()")) ^
+      bytes4(keccak256("getPriceFeed()"));
 
   // 3. Events (we have none!)
 
@@ -49,13 +60,9 @@ contract FundMe {
     s_priceFeed = AggregatorV3Interface(priceFeedAddress);
   }
 
-  receive() external payable {
-    fund();
-  }
+  receive() external payable {}
 
-  fallback() external payable {
-    fund();
-  }
+  fallback() external payable {}
 
   // Explainer from: https://solidity-by-example.org/fallback/
   // Ether is sent to contract
@@ -142,5 +149,14 @@ contract FundMe {
 
   function getPriceFeed() public view returns (AggregatorV3Interface) {
     return s_priceFeed;
+  }
+
+  // Implement supportsInterface
+  function supportsInterface(
+    bytes4 interfaceId
+  ) public view virtual override returns (bool) {
+    return
+      interfaceId == _INTERFACE_ID_FUNDME ||
+      super.supportsInterface(interfaceId);
   }
 }
